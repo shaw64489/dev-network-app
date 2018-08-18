@@ -4,6 +4,10 @@ const router = express.Router();
 const gravatar = require('gravatar');
 //to encrypt password
 const bcrypt = require('bcryptjs');
+//import json web token
+const jwt = require('jsonwebtoken');
+const keys = require('../../config/keys');
+const passport = require('passport');
 
 //pull in User model
 const User = require('../../models/User');
@@ -13,7 +17,7 @@ const User = require('../../models/User');
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Users Works!' }));
 
-// @route   GET api/users/register
+// @route   POST api/users/register
 // @desc    Register a user
 // @access  Public
 router.post('/register', (req, res) => {
@@ -62,5 +66,74 @@ router.post('/register', (req, res) => {
     }
   });
 });
+
+// @route   POST api/users/login
+// @desc    Login user/ returning JWT token
+// @access  Public
+router.post('/login', (req, res) => {
+  //store user email and password
+  const email = req.body.email;
+  const password = req.body.password;
+
+  //Find the user by email
+  //gives us promise - give us user
+  User.findOne({ email }).then(user => {
+    //check for user
+    if (!user) {
+      //if user is not found
+      return res.status(404).json({ email: 'User not found' });
+    }
+
+    //check password
+    //use bcrypt to compare the passwords
+    //pass plain password - get hashed password from User
+    //promise gives true or false value if matched
+    bcrypt.compare(password, user.password).then(isMatch => {
+      //check if isMatch is true
+      if (isMatch) {
+        //User matched
+
+        //create jwt payload
+        const payload = { id: user.id, name: user.name, avatar: user.avatar };
+
+        //Sign token
+        //takes payload - included in token (some user info)
+        //secret key - put in config file
+        //expiration
+        //callback - error and token - send token as response
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 3600 },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: 'Bearer ' + token
+            });
+          }
+        );
+        //if doesnt match
+      } else {
+        return res.status(400).json({ password: 'Password incorrect' });
+      }
+    });
+  });
+});
+
+// @route   GET api/users/current
+// @desc    Return current user
+// @access  Private
+//add passport authenticate
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email
+    });
+  }
+);
 
 module.exports = router;
