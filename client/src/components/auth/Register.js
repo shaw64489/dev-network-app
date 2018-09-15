@@ -20,6 +20,13 @@ class Register extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  //if logged in redirect to dashboard
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
   //Create new lifecycle method that runs when register component receives new properties
   componentWillReceiveProps(nextProps) {
     //test for errors property
