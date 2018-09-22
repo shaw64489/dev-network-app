@@ -40,35 +40,35 @@ module.exports = function validateProfileInput(data) {
   //check if youtube is not empty then do url validator check
   if (!isEmpty(data.youtube)) {
     if (!Validator.isURL(data.youtube)) {
-      errrors.youtube = 'Not a valid URL';
+      errors.youtube = 'Not a valid URL';
     }
   }
 
   //check if twitter is not empty then do url validator check
   if (!isEmpty(data.twitter)) {
     if (!Validator.isURL(data.twitter)) {
-      errrors.twitter = 'Not a valid URL';
+      errors.twitter = 'Not a valid URL';
     }
   }
 
   //check if facebook is not empty then do url validator check
   if (!isEmpty(data.facebook)) {
     if (!Validator.isURL(data.facebook)) {
-      errrors.facebook = 'Not a valid URL';
+      errors.facebook = 'Not a valid URL';
     }
   }
 
   //check if linkedin is not empty then do url validator check
   if (!isEmpty(data.linkedin)) {
     if (!Validator.isURL(data.linkedin)) {
-      errrors.linkedin = 'Not a valid URL';
+      errors.linkedin = 'Not a valid URL';
     }
   }
 
   //check if instagram is not empty then do url validator check
   if (!isEmpty(data.instagram)) {
     if (!Validator.isURL(data.instagram)) {
-      errrors.instagram = 'Not a valid URL';
+      errors.instagram = 'Not a valid URL';
     }
   }
 
