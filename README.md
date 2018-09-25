@@ -2,6 +2,10 @@
 
 Small social network app built with the MERN stack. This is part of the Brad Traversy "MERN Stack Front To Back" Udemy course
 
+### Deployed to Heroku at:
+
+https://sleepy-fortress-95614.herokuapp.com/
+
 # Quick Start
 ### Install dependencies for server
 ```
