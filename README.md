@@ -1,4 +1,4 @@
-# dev-network-app
+# Developer Networking Application
 
 Small social network app built with the MERN stack. This is part of the Brad Traversy "MERN Stack Front To Back" Udemy course
 
