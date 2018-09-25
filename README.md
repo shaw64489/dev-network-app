@@ -38,3 +38,11 @@ npm run client
 - Extensive backend API with Express
 - Integrate React with an Express backend
 - Deploy to Heroku with a postbuild script
+
+## To Run
+```
+- Clone repository.
+- npm install
+- npm run client-install
+- npm run dev
+```
